@@ -43,18 +43,18 @@ def index():
 @app.route('/predict', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
-        # Get the file from post request
+        print(request.form)
         f = request.files['file']
-
-        # Save the file to ./uploads
         basepath = os.path.dirname(__file__)
         file_path = os.path.join(
             basepath, 'uploads', secure_filename(f.filename))
         f.save(file_path)
-
-        # Make prediction
-        result = predict(file_path, melanoma)
-        return result
+        gender = request.form['gender']
+        gender = 0 if gender=="male" else 1
+        age = request.form['Age']
+        site = request.form['Site']
+        result = predict(file_path, melanoma,int(age),int(site),gender)
+        return render_template('base.html', prediction_text=result)
     
     return None
 

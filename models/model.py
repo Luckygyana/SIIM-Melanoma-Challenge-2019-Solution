@@ -3,6 +3,15 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 import tensorflow as tf
 import efficientnet.tfkeras as efn
+import pickle
+import numpy as np
+with open(r'models\lgbm.pickle', 'rb') as handle:
+    lgb = pickle.load(handle)
+def metadata(sex,age,site):
+    site = np.nan if site==6 else site
+    pred = lgb.predict(np.array([sex, age, site]).reshape(
+        1, 3), num_iteration=lgb.best_iteration)[0]
+    return pred
 def load_model(path):
     model_input = tf.keras.Input(shape=(224, 224, 3), name='imgIn')
 
@@ -32,11 +41,10 @@ def prepare_image(path):
     img = tf.reshape(img, [1,224, 224, 3])
     return img
 
-def predict(path,melanoma):
+def predict(path,melanoma,age,site,gender):
     x = prepare_image(path)
-    pred = melanoma.predict(x)[0][0]
+    pred = 0.9*melanoma.predict(x)[0][0] + 0.1*metadata(gender, age, site)
     result = f"{(pred)*100:.2f} % sure that this is Malignant" if pred > 0.5 else f"{(1 - pred)*100:.2f} % sure that this is Benign"
     return result
 if __name__ == "__main__":
     melanoma = load_model(r'models\model.h5')
-    print(predict(r'G:\first deploy\ISIC_0052060.jpg',melanoma))

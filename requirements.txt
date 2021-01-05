@@ -1,7 +1,6 @@
 gevent==1.4.0
 efficientnet==1.1.0
 Werkzeug==0.16.1
-tensorflow_gpu==2.0.0
 numpy==1.18.1
 Flask==1.1.2
 tensorflow==2.4.0
