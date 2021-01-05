@@ -11,13 +11,14 @@ from models.model import predict,load_model
 from flask import Flask, redirect,url_for, request, render_template
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
-
+from flask_ngrok import run_with_ngrok
 # Define a flask app
 
 import os
 if not os.path.exists('uploads'):
     os.makedirs('uploads')
 app = Flask(__name__)
+run_with_ngrok(app)
 
 # Model saved with Keras model.save()
 MODEL_PATH = 'models/model.h5'
