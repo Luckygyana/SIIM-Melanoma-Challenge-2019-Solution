@@ -1,5 +1,4 @@
 # SIIM-Melanoma-Challenge-2019-Solution
-Congratatulations to the winners, and thanks to kaggle, competition sponsor and kernel contributors who shared their insights, it helped us a lot. Congratulations to my teammates @masterroshi @upbeatfreak
 
 Our current position standing 6th Private (23rd Public) is totally because of @cdeotte amazing contribution.
 Our Approach
